@@ -1,12 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, ListViewBase } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 const Form = ({ navigation }) => {
+    const [fname,setfname]=useState('');
+    const [lname,setlname]=useState("");
+    const [email,setemail]=useState("");
     const [agree,setagree]=useState(true);
     const [logged,setlogged]=useState(true);
     const [updates,setupdate]=useState(true);
+    const [dataset,setdataset]=useState([]);
+    // const count=1;
+    const  update_list=async()=>{
+        try {
+            dataset.push({fname, lname, email})
+            await AsyncStorage.setItem("list",JSON.stringify(dataset));
+            // count++;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const navigate_to=()=>{
+        navigation.navigate("Display");
+    }
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>
             <View style={[styles.container]}>
@@ -14,12 +31,10 @@ const Form = ({ navigation }) => {
                     <Text style={[styles.title]}>Registration</Text>
 
                 </View>
-                <View>
-                    <View style={[styles.input_group]}>
-                        <ScrollView>
-                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName"></TextInput>
-                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName"></TextInput>
-                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" Email" keyboardType="email-address"></TextInput>
+                <ScrollView style={[styles.input_group]}>
+                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname} onChangeText={newtext=>setfname(newtext)}></TextInput>
+                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext=>setlname(newtext)}></TextInput>
+                            <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" Email" keyboardType="email-address" defaultValue={email} onChangeText={newtext=>setemail(newtext)}></TextInput>
                             <View style={[styles.checkbox_text]}>
                                 <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={agree} onValueChange={(keyvalue) => setagree(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> I Agree</Text>
                             </View>
@@ -30,14 +45,12 @@ const Form = ({ navigation }) => {
                                 <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={updates} onValueChange={(keyvalue) => setupdate(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Receive Updates!!</Text>
                             </View>
                             <ScrollView>
-                            <TouchableOpacity style={[styles.submit_touchable]}>
+                            <TouchableOpacity style={[styles.submit_touchable]} onPress={()=>{navigate_to();update_list();}}>
                                 <Text style={{color:"white", textAlign:"center" }}>Click</Text>
                             </TouchableOpacity>
 
                             </ScrollView>
-                        </ScrollView>
-                    </View>
-                </View>
+                </ScrollView>
                 <View style={[styles.box]}></View>
             </View>
         </ScrollView>

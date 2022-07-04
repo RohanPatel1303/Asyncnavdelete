@@ -4,24 +4,35 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, ListViewBase } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 const Form = ({ navigation }) => {
-    const [fname,setfname]=useState('111');
-    const [lname,setlname]=useState("111");
-    const [email,setemail]=useState("111");
+    const [fname,setfname]=useState('wqerwq');
+    const [lname,setlname]=useState("weqwe");
+    const [email,setemail]=useState("qweqweq");
     const [agree,setagree]=useState(true);
     const [logged,setlogged]=useState(true);
     const [updates,setupdate]=useState(true);
     const [dataset,setdataset]=useState([]);
     const [list, setlist] = useState([]);
-    async function update_list() {
+
+    // const count=1;
+    const additemtolist = async () => {
         try {
-            dataset.push({ fname, lname, email });
-            await AsyncStorage.setItem("list", JSON.stringify(dataset));
+            list.push({fname,lname,email});
+        } catch (err) {
+            console.log(err);
+
+        }
+        
+    }
+    const  update_list=async()=>{
+        try {
+            dataset.push({fname, lname, email})
+            await AsyncStorage.setItem("list",JSON.stringify(dataset));
         } catch (err) {
             console.log(err);
         }
     }
     const navigate_to=()=>{
-        navigation.navigate("Display",{dataset});
+        navigation.navigate("Display");
     }
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>
@@ -47,7 +58,7 @@ const Form = ({ navigation }) => {
                                 <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={updates} onValueChange={(keyvalue) => setupdate(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Receive Updates!!</Text>
                             </View>
                             <ScrollView>
-                            <TouchableOpacity style={[styles.submit_touchable]} onPress={()=>{update_list();navigate_to();}}>
+                            <TouchableOpacity style={[styles.submit_touchable]} onPress={()=>{additemtolist();navigate_to();update_list();}}>
                                 <Text style={{color:"white", textAlign:"center" }}>Click</Text>
                             </TouchableOpacity>
 

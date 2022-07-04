@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Form from "../screens/Home";
 import Display from "../screens/Display"
+import Datadisplay from "../screens/datadisplay";
 function Root(){
     const Stack=createStackNavigator();
     return(

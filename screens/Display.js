@@ -1,5 +1,6 @@
 import React from "react";
 import { Text,Touchable,View,TouchableOpacity } from "react-native";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const Display=({navigation,route})=>{
     console.log(route.params);
@@ -17,7 +18,7 @@ const Display=({navigation,route})=>{
 
         
     }
-    
+    const [count,setcount]=useState(1);
         return(
         
             <View>
@@ -47,7 +48,7 @@ const Display=({navigation,route})=>{
                             <Text style={{fontWeight:"bold"}}>Firstname: {arrayfinal[0]}</Text>
                             <Text style={{fontWeight:"bold"}}>Lastname: {arrayfinal[1]}</Text>
                             <Text style={{fontWeight:"bold"}}>Email: {arrayfinal[2]}</Text>
-                            <TouchableOpacity onPress={()=>{removeitem(key)}}>
+                            <TouchableOpacity onPress={()=>{removeitem(key);()=>setcount({count}+1)}}>
                                 <Text>DELETE</Text>
                             </TouchableOpacity>
 

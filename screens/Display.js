@@ -6,37 +6,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native-gesture-handler";
 
 const Display=({navigation})=>{
-   
     let[Data,setdata]=useState([]);
-   getdatafromasync=async()=>{
+    async function getasyncdata() {
+
+        const data = await AsyncStorage.getItem("list");
+        setdata(JSON.parse(data));
     
-      setdata(JSON.parse(await AsyncStorage.getItem("list")));
-    
-   }
-   getdatafromasync();
-   removeitem=async(item)=>{
-    getdatafromasync();
-    var filterarray=[];
-    filterarray=Data.filter((val,i)=>{
-      
-        if(val.count!=item.item.count)
-        {
-       
-            return val
-        }
-    })
+    }  
+    setTimeout(() => {
+        
+        getasyncdata();
+    }, 5000);
+    console.log(Data)
+ const removeitem=async(item)=>{
+    const filterarray=[];
+    filterarray=Data.filter()
 
-    await AsyncStorage.setItem("list",JSON.stringify(filterarray));
-    console.log("succes in updation");
-   
-        alert("deleted")
-        setdata(filterarray);
-
-
-   }
+ }
   
-   console.log("from Disoplay")
-   console.log(Data);
+ 
 
     const renderItem=({item})=>(
         <View>
@@ -61,6 +49,9 @@ const Display=({navigation})=>{
         </SafeAreaView>
     )
     
+        
+
 
 }
+
 export default Display;

@@ -12,40 +12,7 @@ const Form = ({ navigation }) => {
     const [updates,setupdate]=useState(true);  
     const [UserData,setUserData]=useState([]);
     const [count,setcount]=useState(1);
-    
-    async function getasyncdata(){
-        try {
-            
-            const data=await AsyncStorage.getItem("list");
-           
-            setUserData(JSON.parse(data));
-            console.log("got data")
-        } catch (error) {
-            
-        }
-        console.log(UserData);
-      
-    }
-    async function pushasyncdata(){
-        console.log(UserData);
-       
-        try {
-            setcount(count+1);
-            UserData.push({count,lname,fname,email})
-            await AsyncStorage.setItem("list",JSON.stringify(UserData));
-        } catch (error) {
-            console.log("errrrorrb")
-            
-        }
-    }
-    async function  navigate_to(){
-                
-                    getasyncdata();
-                    pushasyncdata();
-                    navigation.navigate("Display");
-
-              
-    }
+  
     
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>

@@ -2,67 +2,88 @@ import React from "react";
 import { Text,Touchable,View,TouchableOpacity } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const Display=({navigation,route})=>{
-    console.log(route.params);
-    let dataset=route.params.dataset;
-    // console.log(Object.keys(dataset));
-    console.log(dataset)
-    console.log("-------")
-    const removeitem=(index)=>{
-        console.log(index);
-        console.log(dataset)
-        console.log("    before  --------------->")
-        dataset=Object.values(dataset).splice(index,1);
-        console.log("    After  --------------->")
-        console.log(dataset)
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FlatList } from "react-native-gesture-handler";
 
-        
+const Display=({navigation})=>{
+    // let set=route.params.dataset;
+    let jsondata;
+    const[Data,setdata]=useState();
+    console.log("----------set------------")
+    // console.log(set)
+    console.log("----------set------------")
+    setTimeout(() => {
+        getitem();
+    }, 10000);
+    const getitem=async()=>{
+        try {
+            jsondata=await AsyncStorage.getItem("list");
+            console.log("====from disply=====");
+            console.log(JSON.parse(jsondata));
+         
+            // setdata(jsondata);
+
+        } catch (error) {
+            console.log(error)
+        }
+        setdata(JSON.parse(jsondata));
+        console.log(Data);
+        console.log("======Data======");
     }
-    const [count,setcount]=useState(1);
-        return(
+  
+
+    const removeitem=async(item)=>{
+        let filterarray= Data.filter((val,i)=>{
+            if(val.count!=item.item.count)
+            {
+
+                return val;
+            }
+
+                        
+        })
+   
+
+
+        try {
+            await AsyncStorage.removeItem("list");
+            console.log(filterarray);
+            console.log("===filter array")
+            await AsyncStorage.setItem("list",JSON.stringify(filterarray));
+            console.log("areray updated")
+        } catch (error) {
+            
+        }
+        setTimeout(() => {
+            
+            setdata(filterarray);
+        }, 10000);
         
-            <View>
-             <Text>hello</Text>
-             {Object.keys(dataset).map(function (key, index) {
-                    // return(
-                    //     <Text>Data:{key}{JSON.stringify(data[key])}</Text>
-                    // )
-                    const variable = dataset[key];
-                    var arrayfinal = [];
+        
 
-                    // console.log(data[key]);
-                    console.log(variable)
+    }
+    const renderItem=({item})=>(
+        <View>
+            <Text>First Name:{item.fname}</Text>
+            <Text>Last Name:{item.lname}</Text>
+            <Text>Email:{item.email}</Text>
+            <TouchableOpacity style={{width:"20%",borderWidth:2,borderColor:"black"}} onPress={()=>{removeitem({item});}}>
+                <Text>Delete</Text>
+            </TouchableOpacity>
 
-                    Object.keys(variable).map(function (k) {
-                        var name = JSON.stringify(variable[k])
-                        console.log(name)
-                        arrayfinal.push(name);
+        </View>
+        
+    )
 
-                    })
-                    console.log(typeof (arrayfinal))
-                    const keys = Object.keys(arrayfinal);
-                    console.log(keys)
-                    return (
-                        <View style={{ marginBottom: 10}}>
+    return(
+        <SafeAreaView>
+            <FlatList
+            data={Data}
+            renderItem={renderItem}>
 
-                            <Text style={{fontWeight:"bold"}}>Firstname: {arrayfinal[0]}</Text>
-                            <Text style={{fontWeight:"bold"}}>Lastname: {arrayfinal[1]}</Text>
-                            <Text style={{fontWeight:"bold"}}>Email: {arrayfinal[2]}</Text>
-                            <TouchableOpacity onPress={()=>{removeitem(key);()=>setcount({count}+1)}}>
-                                <Text>DELETE</Text>
-                            </TouchableOpacity>
-
-
-                        </View>
-                    )
-
-                })}
-                  
-             
-              
-            </View>
-        )
-
+            </FlatList>
+        </SafeAreaView>
+    )
     
 
 }

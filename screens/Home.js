@@ -12,15 +12,20 @@ const Form = ({ navigation }) => {
     const [updates,setupdate]=useState(true);
     const [dataset,setdataset]=useState([]);
     const [list, setlist] = useState([]);
-    async function update_list() {
+    const [count,setcount]=useState(1);
+     function update_list() {
+        // var x=count+1;
+        setcount(count+1);
         try {
-            dataset.push({ fname, lname, email });
-            await AsyncStorage.setItem("list", JSON.stringify(dataset));
+            
+            dataset.push({ fname, lname, email,count });
+            // await AsyncStorage.setItem("list", JSON.stringify(dataset));
         } catch (err) {
             console.log(err);
         }
     }
     const navigate_to=()=>{
+        
         navigation.navigate("Display",{dataset});
     }
     return (

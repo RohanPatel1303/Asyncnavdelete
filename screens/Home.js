@@ -9,25 +9,44 @@ const Form = ({ navigation }) => {
     const [email,setemail]=useState("111");
     const [agree,setagree]=useState(true);
     const [logged,setlogged]=useState(true);
-    const [updates,setupdate]=useState(true);
-    const [dataset,setdataset]=useState([]);
-    const [list, setlist] = useState([]);
+    const [updates,setupdate]=useState(true);  
+    const [UserData,setUserData]=useState([]);
     const [count,setcount]=useState(1);
-     function update_list() {
-        // var x=count+1;
-        setcount(count+1);
+    
+    async function getasyncdata(){
         try {
             
-            dataset.push({ fname, lname, email,count });
-            // await AsyncStorage.setItem("list", JSON.stringify(dataset));
-        } catch (err) {
-            console.log(err);
+            const data=await AsyncStorage.getItem("list");
+           
+            setUserData(JSON.parse(data));
+            console.log("got data")
+        } catch (error) {
+            
+        }
+        console.log(UserData);
+      
+    }
+    async function pushasyncdata(){
+        console.log(UserData);
+       
+        try {
+            setcount(count+1);
+            UserData.push({count,lname,fname,email})
+            await AsyncStorage.setItem("list",JSON.stringify(UserData));
+        } catch (error) {
+            console.log("errrrorrb")
+            
         }
     }
-    const navigate_to=()=>{
-        
-        navigation.navigate("Display",{dataset});
+    async function  navigate_to(){
+                
+                    getasyncdata();
+                    pushasyncdata();
+                    navigation.navigate("Display");
+
+              
     }
+    
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>
             <View style={[styles.container]}>
@@ -52,7 +71,7 @@ const Form = ({ navigation }) => {
                                 <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={updates} onValueChange={(keyvalue) => setupdate(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Receive Updates!!</Text>
                             </View>
                             <ScrollView>
-                            <TouchableOpacity style={[styles.submit_touchable]} onPress={()=>{update_list();navigate_to();}}>
+                            <TouchableOpacity style={[styles.submit_touchable]} onPress={()=>{navigate_to();}}>
                                 <Text style={{color:"white", textAlign:"center" }}>Click</Text>
                             </TouchableOpacity>
 

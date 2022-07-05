@@ -6,62 +6,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native-gesture-handler";
 
 const Display=({navigation})=>{
-    // let set=route.params.dataset;
-    let jsondata;
-    const[Data,setdata]=useState();
-    console.log("----------set------------")
-    // console.log(set)
-    console.log("----------set------------")
-    setTimeout(() => {
-        getitem();
-    }, 10000);
-    const getitem=async()=>{
-        try {
-            jsondata=await AsyncStorage.getItem("list");
-            console.log("====from disply=====");
-            console.log(JSON.parse(jsondata));
-         
-            // setdata(jsondata);
-
-        } catch (error) {
-            console.log(error)
-        }
-        setdata(JSON.parse(jsondata));
-        console.log(Data);
-        console.log("======Data======");
-    }
-  
-
-    const removeitem=async(item)=>{
-        let filterarray= Data.filter((val,i)=>{
-            if(val.count!=item.item.count)
-            {
-
-                return val;
-            }
-
-                        
-        })
    
-
-
-        try {
-            await AsyncStorage.removeItem("list");
-            console.log(filterarray);
-            console.log("===filter array")
-            await AsyncStorage.setItem("list",JSON.stringify(filterarray));
-            console.log("areray updated")
-        } catch (error) {
-            
+    let[Data,setdata]=useState([]);
+   getdatafromasync=async()=>{
+    
+      setdata(JSON.parse(await AsyncStorage.getItem("list")));
+    
+   }
+   getdatafromasync();
+   removeitem=async(item)=>{
+    getdatafromasync();
+    var filterarray=[];
+    filterarray=Data.filter((val,i)=>{
+      
+        if(val.count!=item.item.count)
+        {
+       
+            return val
         }
-        setTimeout(() => {
-            
-            setdata(filterarray);
-        }, 10000);
-        
-        
+    })
 
-    }
+    await AsyncStorage.setItem("list",JSON.stringify(filterarray));
+    console.log("succes in updation");
+   
+        alert("deleted")
+        setdata(filterarray);
+
+
+   }
+  
+   console.log("from Disoplay")
+   console.log(Data);
+
     const renderItem=({item})=>(
         <View>
             <Text>First Name:{item.fname}</Text>

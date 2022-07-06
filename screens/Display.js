@@ -4,7 +4,7 @@ import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native-gesture-handler";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -63,7 +63,7 @@ const Display = ({ navigation }) => {
             <View style={[styles.deletelogo]}>
                 <TouchableOpacity  onPress={() => { removeitem({ item }); }}>
                     <Image source={{ uri: "https://w7.pngwing.com/pngs/29/45/png-transparent-delete-key-logo-button-text-rectangle-logo-thumbnail.png", width: 50, height: 50 }}></Image>
-                    <FontAwesomeIcon icon={"fax"}></FontAwesomeIcon>
+                    {/* <FontAwesomeIcon icon={"fax"}></FontAwesomeIcon> */}
                 </TouchableOpacity>
             </View>
         </View>

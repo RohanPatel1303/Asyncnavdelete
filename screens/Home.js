@@ -1,18 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, ListViewBase } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 const Form = ({ navigation }) => {
-    const [fname,setfname]=useState('111');
+    const [fname,setfname]=useState('2222');
     const [lname,setlname]=useState("111");
     const [email,setemail]=useState("111");
     const [agree,setagree]=useState(true);
     const [logged,setlogged]=useState(true);
     const [updates,setupdate]=useState(true);  
-    const [UserData,setUserData]=useState([]);
     const [count,setcount]=useState(1);
-  
+
+    let user={fname,lname,email,agree,logged,updates,count};
+
+  const navigate_to=async()=>{
+    const stored_data= JSON.parse(await AsyncStorage.getItem("list"));
+    const data=[user];
+    var newdata=[];
+    if(stored_data==null)
+    {
+        console.log("executed")
+        await AsyncStorage.setItem("list",JSON.stringify(data));
+        setcount(count+1);
+    
+
+    }
+    else{
+        newdata=[...stored_data,user];
+        await AsyncStorage.setItem("list",JSON.stringify(newdata));
+        console.log((await AsyncStorage.getItem("list")))
+        setcount(count+1);
+        
+        
+    }
+    // await AsyncStorage.clear();
+   setfname("");
+   setlname("");
+   setemail("");
+   setagree("")
+navigation.navigate("Display");
+
+  }
     
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>

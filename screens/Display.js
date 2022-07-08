@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text, Touchable, View, TouchableOpacity, Image, StyleSheet, Dimensions } from "react-native";
+import { Text, Touchable, View, TouchableOpacity, Image, StyleSheet, Dimensions, ToastAndroid } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,18 +15,19 @@ const [postdata,setpostdata]=useState([]);
     var post
     let [Data, setdata] = useState([]);
     const  fetchpostdata=async()=>{
+        ToastAndroid.show("Loading.........",ToastAndroid.SHORT);
         fetch("https://api.postalpincode.in/postoffice/City").then((response) => response.json()).then((json) => {
             // setpostdata(json)
             post=json;
             console.log(post);
             console.log("success12")
+            // ToastAndroid("Loading");
+            
             navigation.navigate("Postalapi",post);
-    
-         
-          
-          
-      }).catch((err) => console.log(err))
-    //   setpostdata(post);
+            
+            
+        }).catch((err) => console.log(err))
+        //   setpostdata(post);
       console.log("success")
 
     }

@@ -1,15 +1,42 @@
 import React from "react";
 import { useState } from "react";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { View,Text,TouchableOpacity,FlatList } from "react-native";
+import { View,Text,TouchableOpacity,FlatList,TextInput } from "react-native";
 const Postalapi=({navigation,route})=>{
-    var data=[];
-    console.log(route.params);
-    console.log("----route params ---");
-    console.log(route.params[0]);
-    var data=route.params[0].PostOffice;
-    console.log(data);
-    console.log("---got ouj");
+    const [search,setsearch]=useState('');
+    const [filterdata,setfilterdata]=useState([]);
+    const [postdata,setpostdata]=useState([]);
+    useEffect(()=>{
+        fetch("https://api.postalpincode.in/postoffice/City").then((response)=>response.json()).then((json)=>{
+            console.log(json[0].PostOffice.Name);
+            setfilterdata(json[0].PostOffice)
+            setpostdata(json[0].PostOffice)
+            
+            console.log("hello")
+        })
+    },[]);
+    const searchfilter=(text)=>{
+        if(text){
+            const newdata=postdata.filter(function (item){
+                console.log(item.Name.toUpperCase());
+                
+                
+                // const itemdata=item.Name?item.Name.to;
+                // console.log(item.Name);
+                // console.log("filterv");
+                // return itemdata.indexOf(itemdata) > -1;
+            });
+            setfilterdata(newdata);
+            setsearch(text);
+
+        }
+        else{
+            setfilterdata(postdata);
+            setsearch(text);
+        }
+    }
+
 const navigateto=(item)=>{
     navigation.navigate("Subpostaldata",item);
 
@@ -33,9 +60,16 @@ const navigateto=(item)=>{
       };
     return (
         <View>
+            <TextInput
+          style={styles.textInputStyle}
+          onChangeText={(text) => searchfilter(text)}
+          value={search}
+          underlineColorAndroid="transparent"
+          placeholder="Search Here"
+        />
      
           <FlatList
-            data={data}
+            data={filterdata}
             renderItem={render}
           >
     

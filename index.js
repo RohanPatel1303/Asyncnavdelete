@@ -12,4 +12,4 @@ import Basic from './screens/Swipablelist';
 import {name as appName} from './app.json';
 
 
-AppRegistry.registerComponent(appName, () => Basic);
+AppRegistry.registerComponent(appName, () => Root);

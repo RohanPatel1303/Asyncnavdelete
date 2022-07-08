@@ -11,16 +11,39 @@ const windowHeight = Dimensions.get('window').height;
 console.log(windowHeight)
 console.log(windowWidth);
 const Display = ({ navigation }) => {
+const [postdata,setpostdata]=useState([]);
+    var post
     let [Data, setdata] = useState([]);
+    const  fetchpostdata=async()=>{
+        fetch("https://api.postalpincode.in/postoffice/City").then((response) => response.json()).then((json) => {
+            // setpostdata(json)
+            post=json;
+            console.log(post);
+            console.log("success12")
+            navigation.navigate("Postalapi",post);
+    
+         
+          
+          
+      }).catch((err) => console.log(err))
+    //   setpostdata(post);
+      console.log("success")
+
+    }
     async function getasyncdata() {
 
         const data = await AsyncStorage.getItem("list");
         setdata(JSON.parse(data));
 
     }
-    useEffect(() => {
-        getasyncdata();
-    })
+   
+        setTimeout(() => {
+            
+
+            
+            getasyncdata();
+        }, 200);
+
 
 
     const removeitem = async (item) => {
@@ -34,7 +57,13 @@ const Display = ({ navigation }) => {
         setdata(filterarray)
         await AsyncStorage.setItem("list", JSON.stringify(filterarray));
     }
+  
+ 
+const navigate_to_postalapi=async()=>{
+   
 
+   
+}
 
 
     const renderItem = ({ item }) => (
@@ -62,8 +91,7 @@ const Display = ({ navigation }) => {
             </View>
             <View style={[styles.deletelogo]}>
                 <TouchableOpacity  onPress={() => { removeitem({ item }); }}>
-                    <Image source={{ uri: "https://w7.pngwing.com/pngs/29/45/png-transparent-delete-key-logo-button-text-rectangle-logo-thumbnail.png", width: 50, height: 50 }}></Image>
-                    {/* <FontAwesomeIcon icon={"fax"}></FontAwesomeIcon> */}
+                    <Image source={{ uri: "https://i.im.ge/2022/07/07/uY7Vwr.jpg", width: 50, height: 50 }}></Image>
                 </TouchableOpacity>
             </View>
         </View>
@@ -72,6 +100,10 @@ const Display = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ backgroundColor: "#83AF9B", flex: 1 }}>
+            <TouchableOpacity onPress={()=>{fetchpostdata();}}>
+                <Text>Redirect To Post Data!!</Text>
+
+            </TouchableOpacity>
             <FlatList
                 data={Data}
                 renderItem={renderItem}>

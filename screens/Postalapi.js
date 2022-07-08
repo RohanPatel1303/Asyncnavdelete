@@ -21,7 +21,12 @@ const Postalapi=({navigation,route})=>{
             const newdata=postdata.filter(function (item){
                 console.log(item.Name.toUpperCase());
                 
+                const itemdata=item.Name?item.Name.toUpperCase():''.toUpperCase();
                 
+        //         const itemData = item.title
+        //   ? item.title.toUpperCase()
+        //   : ''.toUpperCase();
+        // const textData = text.toUpperCase();
                 // const itemdata=item.Name?item.Name.to;
                 // console.log(item.Name);
                 // console.log("filterv");

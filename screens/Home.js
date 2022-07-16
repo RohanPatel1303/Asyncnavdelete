@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, ListViewBase, Alert } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 const Form = ({ navigation }) => {
     const [fname, setfname] = useState('');
     const [lname, setlname] = useState("");
@@ -20,14 +23,14 @@ const Form = ({ navigation }) => {
     const validateemail = (newtext) => {
         console.log("hello");
         var getemail = newtext;
-        var regex =/^([-.0-9a-zA-Z]+)@([-.a-zA-Z]+).[a-zA-Z]{2,7}$/
+        var regex = /^([-.0-9a-zA-Z]+)@([-.a-zA-Z]+).[a-zA-Z]{2,7}$/
         var result = regex.test(getemail);
         console.log(result);
         if (!result) {
             console.log(result);
             setshowerr(true);
         }
-        else{
+        else {
             setshowerr(false);
         }
     }
@@ -35,17 +38,16 @@ const Form = ({ navigation }) => {
     const validatfname = (newtextfname) => {
         var f_name = newtextfname;
         var f_len = f_name.length;
-        console.log(typeof(f_len));
-        if(f_len>0 && f_len<3){
+        console.log(typeof (f_len));
+        if (f_len > 0 && f_len < 3) {
             console.log("executred");
             setferr(true);
         }
-        else{
+        else {
             console.log("wlsae")
             setferr(false);
         }
-        if(f_len==0)
-        {
+        if (f_len == 0) {
             setferr(true);
         }
 
@@ -53,17 +55,16 @@ const Form = ({ navigation }) => {
     const validatelname = (newtext) => {
         var l_name = newtext;
         var l_len = l_name.length;
-        console.log(typeof(l_len));
-        if(l_len>0 && l_len<3){
+        console.log(typeof (l_len));
+        if (l_len > 0 && l_len < 3) {
             console.log("executred");
             setlerr(true);
         }
-        else{
+        else {
             console.log("wlsae")
             setlerr(false);
         }
-        if(l_len==0)
-        {
+        if (l_len == 0) {
             setlerr(true);
         }
 
@@ -73,22 +74,22 @@ const Form = ({ navigation }) => {
         const stored_data = JSON.parse(await AsyncStorage.getItem("list"));
         const data = [user];
         var newdata = [];
-        
-        if (fname == "" || lname == "" || email == ""||lerr||ferr||showerr) {
-            Alert.alert("Continue?","Details Entered Does not Follow Requirements ,Data Wont Be Updated",
-            [
-                {
-                  text: "Navigate To Next Screen",
-                  onPress: () => navigation.navigate("Display")
-                },
-                {
-                  text: "Cancel",
-                  onPress: () => console.log("Cancel Pressed"),
-                  style: "cancel"
-                },
-                // { text: "OK", onPress: () => console.log("OK Pressed") }
-              ])
-       
+
+        if (fname == "" || lname == "" || email == "" || lerr || ferr || showerr) {
+            Alert.alert("Continue?", "Details Entered Does not Follow Requirements ,Data Wont Be Updated",
+                [
+                    {
+                        text: "Navigate To Next Screen",
+                        onPress: () => navigation.navigate("Display")
+                    },
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                    },
+                    // { text: "OK", onPress: () => console.log("OK Pressed") }
+                ])
+
 
         }
         else {
@@ -130,7 +131,11 @@ const Form = ({ navigation }) => {
                         <Text style={[styles.title]}>Registration</Text>
 
                     </View>
-                    <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname}  onChangeText={   newtextfname => { setfname(newtextfname);validatfname(newtextfname);  }}></TextInput>
+                    <View style={{flexDirection:"row",alignItems:"center",borderWidth:4}}>
+
+                    <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                    <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname} onChangeText={newtextfname => { setfname(newtextfname); validatfname(newtextfname); }}></TextInput>
+                    </View>
                     <View style={[styles.err_msg_view]}>
                         {
                             ferr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
@@ -140,18 +145,18 @@ const Form = ({ navigation }) => {
 
                     <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext => { setlname(newtext); validatelname(newtext); }}></TextInput>
                     <View style={[styles.err_msg_view]}>
-                    
-                    {
-                        lerr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
-                    }
+
+                        {
+                            lerr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
+                        }
                     </View>
 
                     <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" Email" keyboardType="email-address" defaultValue={email} onChangeText={newtext => { setemail(newtext); validateemail(newtext); }}></TextInput>
                     <View style={[styles.err_msg_view]}>
-                    
-                    {
-                        showerr ? <Text style={[styles.err_msg]}>Enter Email Parameter Correcttly eg: abc@xyz.com</Text> : null
-                    }
+
+                        {
+                            showerr ? <Text style={[styles.err_msg]}>Enter Email Parameter Correcttly eg: abc@xyz.com</Text> : null
+                        }
                     </View>
 
                     <View style={[styles.checkbox_text]}>
@@ -204,7 +209,8 @@ const styles = StyleSheet.create(
             borderWidth: 3,
             // marginBottom: 10,
             fontWeight: "bold",
-            borderRadius: 20
+            borderRadius: 20,
+            width:230
 
 
         },
@@ -230,16 +236,16 @@ const styles = StyleSheet.create(
             borderRadius: 5,
             marginTop: 20
         },
-        err_msg_view:{
-            height:35,
-            width:"100%",
-            justifyContent:"center"
+        err_msg_view: {
+            height: 35,
+            width: "100%",
+            justifyContent: "center"
             // borderWidth:2
         },
         err_msg: {
             color: "red",
             textAlign: "center",
-            fontSize:17,
+            fontSize: 17,
 
             // borderWidth:2,
             marginBottom: 10,

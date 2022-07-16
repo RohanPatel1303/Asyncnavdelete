@@ -4,8 +4,9 @@ import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native-gesture-handler";
-// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-
+import { Icon } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faMugSaucer } from "@fortawesome/free-solid-svg-icons";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 console.log(windowHeight)
@@ -75,6 +76,8 @@ const navigate_to_postalapi=async()=>{
             </View>
             <View style={[styles.details]}>
                 <Text>LastName:</Text>
+                <FontAwesomeIcon icon={faMugSaucer}></FontAwesomeIcon>
+                {/* <Icon name="rocket" size={30} color="#900"></Icon> */}
                 <Text>Email:</Text>
                 <Text>Agreed:</Text>
                 <Text>Logged:</Text>

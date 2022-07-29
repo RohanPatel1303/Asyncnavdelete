@@ -23,14 +23,6 @@ const Postalapi=({navigation,route})=>{
                 
                 const itemdata=item.Name?item.Name.toUpperCase():''.toUpperCase();
                 
-        //         const itemData = item.title
-        //   ? item.title.toUpperCase()
-        //   : ''.toUpperCase();
-        // const textData = text.toUpperCase();
-                // const itemdata=item.Name?item.Name.to;
-                // console.log(item.Name);
-                // console.log("filterv");
-                // return itemdata.indexOf(itemdata) > -1;
             });
             setfilterdata(newdata);
             setsearch(text);
@@ -64,18 +56,22 @@ const navigateto=(item)=>{
         );
       };
     return (
-        <View>
-            <TextInput
+        <View style={{backgroundColor:"#0F3D3E"}}>
+            {/* <TextInput
           style={styles.textInputStyle}
           onChangeText={(text) => searchfilter(text)}
           value={search}
           underlineColorAndroid="transparent"
           placeholder="Search Here"
-        />
+        /> */}
+        <Text style={{alignItems:"center",justifyContent:"center",textAlign:"center",color:"#F1F1F1"}}>
+          POSTAL API DATA
+        </Text>
      
           <FlatList
             data={filterdata}
             renderItem={render}
+            
           >
     
           </FlatList>
@@ -86,12 +82,18 @@ const navigateto=(item)=>{
 }
 const styles=StyleSheet.create({
     city_pincode_view:{
+      backgroundColor:"#F1F1F1",
       flexDirection:"row",
       justifyContent:"space-between",
       padding:10,
       borderWidth:2,
       borderRadius:10,
-      marginBottom:10
+      marginTop:10,
+      marginLeft:5,
+      marginRight:5,
+      marginBottom:10,
+      color:"#100F0F"
+    
     //   alignItems:"flex-start"
     }
   })

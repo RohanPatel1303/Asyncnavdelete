@@ -1,15 +1,14 @@
 import React from "react";
 import { View,Text,StyleSheet } from "react-native";
-const Subpostaldata=({navigation,route})=>{
+const Subpostaldata=({route})=>{
     var details=[];
     console.log(route.params);
     var x=route.params;
    details=x;
    console.log("sdgfg")
     console.log(details);
-
 return(
-    <View>
+    <View style={{backgroundColor:"#222831",flex:1}}>
         <View style={[styles.details_view]}>
             <Text style={[styles.text_view]}>Name:</Text>
             <Text style={[styles.text_view]}>{details.Name}</Text>
@@ -55,18 +54,19 @@ return(
             <Text style={[styles.text_view]}>{details.Pincode}</Text>
         </View>
     </View>
-)
-
-    
+)    
 }
 const styles=StyleSheet.create({
     details_view:{
         borderWidth:2,
         borderRadius:10,
         margin:10,
+        marginLeft:15,
+        marginRight:15,
         height:30,
         flexDirection:"row",
-        justifyContent:"flex-start"
+        justifyContent:"flex-start",
+        backgroundColor:"#00ADB5"
     },
     text_view:{
         textAlign:"center",

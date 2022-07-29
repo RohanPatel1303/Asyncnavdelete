@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Form from "../screens/Home";
 import Display from "../screens/Display"
-import Datadisplay from "../screens/datadisplay";
 import Subpostaldata from "../screens/SubPostaldata";
 import Postalapi from "../screens/Postalapi";
 function Root(){

@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, ListViewBase, Alert } from "react-native";
+import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-
 const Form = ({ navigation }) => {
     const [fname, setfname] = useState('');
     const [lname, setlname] = useState("");
@@ -17,7 +14,6 @@ const Form = ({ navigation }) => {
     const [showerr, setshowerr] = useState(false);
     const [ferr, setferr] = useState(false);
     const [lerr, setlerr] = useState(0);
-
 
     let user = { fname, lname, email, agree, logged, updates, count };
     const validateemail = (newtext) => {
@@ -131,11 +127,11 @@ const Form = ({ navigation }) => {
                         <Text style={[styles.title]}>Registration</Text>
 
                     </View>
-                    <View style={{flexDirection:"row",alignItems:"center",borderWidth:4}}>
+                    {/* <View style={{flexDirection:"row",alignItems:"center",borderWidth:4}}> */}
 
-                    <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                    {/* <FontAwesomeIcon icon={faUser}></FontAwesomeIcon> */}
                     <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname} onChangeText={newtextfname => { setfname(newtextfname); validatfname(newtextfname); }}></TextInput>
-                    </View>
+                    {/* </View> */}
                     <View style={[styles.err_msg_view]}>
                         {
                             ferr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
@@ -143,7 +139,7 @@ const Form = ({ navigation }) => {
 
                     </View>
 
-                    <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext => { setlname(newtext); validatelname(newtext); }}></TextInput>
+                    <TextInput  placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext => { setlname(newtext); validatelname(newtext); }}></TextInput>
                     <View style={[styles.err_msg_view]}>
 
                         {
@@ -160,13 +156,13 @@ const Form = ({ navigation }) => {
                     </View>
 
                     <View style={[styles.checkbox_text]}>
-                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={agree} onValueChange={(keyvalue) => setagree(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> I Agree</Text>
+                        <CheckBox tintColor="#000000"  disabled={false} onFillColor="#000000" value={agree} onValueChange={(keyvalue) => setagree(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> I Agree</Text>
                     </View>
                     <View style={[styles.checkbox_text]}>
-                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={logged} onValueChange={(keyvalue) => setlogged(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Keep Me Logged In</Text>
+                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={logged} onValueChange={(keyvalue) => setlogged(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Keep Me Logged In</Text>
                     </View>
                     <View style={[styles.checkbox_text]}>
-                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={updates} onValueChange={(keyvalue) => setupdate(keyvalue)} tintColors={{ true: '#000000', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Receive Updates!!</Text>
+                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={updates} onValueChange={(keyvalue) => setupdate(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Receive Updates!!</Text>
                     </View>
                     <ScrollView>
                         <TouchableOpacity style={[styles.submit_touchable]} onPress={() => { navigate_to(); }}>
@@ -188,7 +184,7 @@ const styles = StyleSheet.create(
             flex: 1,
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "#00000099"
+            backgroundColor: "#222831"
 
         },
         box: {
@@ -205,12 +201,13 @@ const styles = StyleSheet.create(
 
         },
         input: {
-            borderColor: "#03e9f4",
+            borderColor: "#F637EC",
             borderWidth: 3,
             // marginBottom: 10,
             fontWeight: "bold",
             borderRadius: 20,
-            width:230
+            width:230,
+            color:"white"
 
 
         },
@@ -221,14 +218,16 @@ const styles = StyleSheet.create(
         },
         checkbox_text: {
             flexDirection: "row",
-            marginLeft: 50
+            marginLeft: 50,
         },
         text_check: {
             marginTop: 4,
-            marginLeft: 10
+            marginLeft: 10,
+            color:"white"
+
         },
         submit_touchable: {
-            backgroundColor: "#000000",
+            backgroundColor: "#F637EC",
             alignSelf: "center",
             width: 70,
             height: 30,

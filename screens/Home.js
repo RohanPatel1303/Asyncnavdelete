@@ -3,6 +3,8 @@ import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
+import { faEnvelope,  faUser, faUserAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 const Form = ({ navigation }) => {
     const [fname, setfname] = useState('');
     const [lname, setlname] = useState("");
@@ -63,14 +65,12 @@ const Form = ({ navigation }) => {
         if (l_len == 0) {
             setlerr(true);
         }
-
     }
 
     const navigate_to = async () => {
         const stored_data = JSON.parse(await AsyncStorage.getItem("list"));
         const data = [user];
         var newdata = [];
-
         if (fname == "" || lname == "" || email == "" || lerr || ferr || showerr) {
             Alert.alert("Continue?", "Details Entered Does not Follow Requirements ,Data Wont Be Updated",
                 [
@@ -83,10 +83,7 @@ const Form = ({ navigation }) => {
                         onPress: () => console.log("Cancel Pressed"),
                         style: "cancel"
                     },
-                    // { text: "OK", onPress: () => console.log("OK Pressed") }
                 ])
-
-
         }
         else {
             if (stored_data == null) {
@@ -109,13 +106,8 @@ const Form = ({ navigation }) => {
             setlname("");
             setemail("");
         }
-
         // await AsyncStorage.clear();
-
-
-
     }
-
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>
             <View style={[styles.container]}>
@@ -127,36 +119,38 @@ const Form = ({ navigation }) => {
                         <Text style={[styles.title]}>Registration</Text>
 
                     </View>
-                    {/* <View style={{flexDirection:"row",alignItems:"center",borderWidth:4}}> */}
-
-                    {/* <FontAwesomeIcon icon={faUser}></FontAwesomeIcon> */}
-                    <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname} onChangeText={newtextfname => { setfname(newtextfname); validatfname(newtextfname); }}></TextInput>
-                    {/* </View> */}
-                    <View style={[styles.err_msg_view]}>
-                        {
-                            ferr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
-                        }
-
+            
+                    <View style={[styles.view_icon_input]}>
+                        <FontAwesomeIcon icon={faUserAlt} size={32}></FontAwesomeIcon>
+                        <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" FirstName" defaultValue={fname} onChangeText={newtextfname => { setfname(newtextfname); validatfname(newtextfname); }}></TextInput>
+                        <View style={[styles.err_msg_view]}>
+                            {
+                                ferr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
+                            }
+                        </View>
                     </View>
 
-                    <TextInput  placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext => { setlname(newtext); validatelname(newtext); }}></TextInput>
-                    <View style={[styles.err_msg_view]}>
-
-                        {
-                            lerr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
-                        }
+                    <View style={[styles.view_icon_input]}>
+                        <FontAwesomeIcon icon={faUser} size={32}></FontAwesomeIcon>
+                        <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" LastName" defaultValue={lname} onChangeText={newtext => { setlname(newtext); validatelname(newtext); }}></TextInput>
+                        <View style={[styles.err_msg_view]}>
+                            {
+                                lerr ? <Text style={[styles.err_msg]}>Enter At Least 3 Characters</Text> : null
+                            }
+                        </View>
                     </View>
 
-                    <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" Email" keyboardType="email-address" defaultValue={email} onChangeText={newtext => { setemail(newtext); validateemail(newtext); }}></TextInput>
-                    <View style={[styles.err_msg_view]}>
-
-                        {
-                            showerr ? <Text style={[styles.err_msg]}>Enter Email Parameter Correcttly eg: abc@xyz.com</Text> : null
-                        }
+                    <View style={[styles.view_icon_input]}>
+                        <FontAwesomeIcon icon={faEnvelope} size={32}></FontAwesomeIcon>
+                        <TextInput placeholderTextColor={"white"} style={[styles.input]} placeholder=" Email" keyboardType="email-address" defaultValue={email} onChangeText={newtext => { setemail(newtext); validateemail(newtext); }}></TextInput>
+                        <View style={[styles.err_msg_view]}>
+                            {
+                                showerr ? <Text style={[styles.err_msg]}>Enter Email Parameter Correcttly eg: abc@xyz.com</Text> : null
+                            }
+                        </View>
                     </View>
-
                     <View style={[styles.checkbox_text]}>
-                        <CheckBox tintColor="#000000"  disabled={false} onFillColor="#000000" value={agree} onValueChange={(keyvalue) => setagree(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> I Agree</Text>
+                        <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={agree} onValueChange={(keyvalue) => setagree(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> I Agree</Text>
                     </View>
                     <View style={[styles.checkbox_text]}>
                         <CheckBox tintColor="#000000" disabled={false} onFillColor="#000000" value={logged} onValueChange={(keyvalue) => setlogged(keyvalue)} tintColors={{ true: '#F637EC', false: '#d4d4d4' }}></CheckBox><Text style={[styles.text_check]}> Keep Me Logged In</Text>
@@ -168,7 +162,6 @@ const Form = ({ navigation }) => {
                         <TouchableOpacity style={[styles.submit_touchable]} onPress={() => { navigate_to(); }}>
                             <Text style={{ color: "white", textAlign: "center" }}>Click</Text>
                         </TouchableOpacity>
-
                     </ScrollView>
                 </ScrollView>
                 <View style={[styles.box]}></View>
@@ -185,7 +178,6 @@ const styles = StyleSheet.create(
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: "#222831"
-
         },
         box: {
             flex: 1,
@@ -197,8 +189,6 @@ const styles = StyleSheet.create(
             fontWeight: "bold",
             color: "white",
             textAlign: "center",
-
-
         },
         input: {
             borderColor: "#F637EC",
@@ -206,8 +196,8 @@ const styles = StyleSheet.create(
             // marginBottom: 10,
             fontWeight: "bold",
             borderRadius: 20,
-            width:230,
-            color:"white"
+            width: 200,
+            color: "white"
 
 
         },
@@ -223,7 +213,7 @@ const styles = StyleSheet.create(
         text_check: {
             marginTop: 4,
             marginLeft: 10,
-            color:"white"
+            color: "white"
 
         },
         submit_touchable: {
@@ -239,16 +229,19 @@ const styles = StyleSheet.create(
             height: 35,
             width: "100%",
             justifyContent: "center"
-            // borderWidth:2
         },
         err_msg: {
             color: "red",
             textAlign: "center",
             fontSize: 17,
-
-            // borderWidth:2,
             marginBottom: 10,
-            // fontSize:10,
+        },
+        view_icon_input: {
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom:10,
         }
 
     }
